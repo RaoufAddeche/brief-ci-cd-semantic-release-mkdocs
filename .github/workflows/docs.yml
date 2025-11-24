@@ -1,0 +1,44 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: Build and Deploy Docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --group docs
+
+      - name: Copy CHANGELOG to docs (if exists)
+        run: |
+          if [ -f CHANGELOG.md ]; then
+            cp CHANGELOG.md docs/changelog.md
+          fi
+        continue-on-error: true
+
+      - name: Configure Git for deployment
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Build and deploy documentation
+        run: uv run mkdocs gh-deploy --force --clean --verbose
