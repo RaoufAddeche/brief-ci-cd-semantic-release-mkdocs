@@ -1,0 +1,35 @@
+name: Sync develop after release
+
+on:
+  release:
+    types: [published]
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    name: Sync develop with main
+    runs-on: ubuntu-latest
+    # Don't run on release commits
+    if: "!contains(github.event.head_commit.message, 'chore(release):')"
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge main into develop
+        run: |
+          git fetch origin develop
+          git checkout develop
+          git merge origin/main --no-ff -m "chore: sync develop with main after release [skip ci]"
+          git push origin develop
