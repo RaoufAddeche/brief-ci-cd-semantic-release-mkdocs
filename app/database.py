@@ -4,11 +4,10 @@ Ce module gère la connexion à la base de données PostgreSQL
 et fournit une fonction générateur pour obtenir des sessions de base de données.
 """
 
-from sqlmodel import create_engine, Session
 import os
-import sys
-from typing import Generator
+
 from dotenv import load_dotenv
+from sqlmodel import Session, create_engine
 
 # Charger les variables d'environnement depuis .env
 load_dotenv()
