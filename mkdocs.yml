@@ -1,0 +1,106 @@
+site_name: Items API Documentation
+site_description: API REST professionnelle pour la gestion d'articles avec CI/CD complet
+site_author: RaoufAddeche
+site_url: https://raoufaddeche.github.io/brief-ci-cd-semantic-release-mkdocs
+
+repo_name: RaoufAddeche/brief-ci-cd-semantic-release-mkdocs
+repo_url: https://github.com/RaoufAddeche/brief-ci-cd-semantic-release-mkdocs
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Passer en mode sombre
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Passer en mode clair
+
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: fr
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            show_category_heading: true
+            docstring_style: google
+            members_order: source
+            show_signature_annotations: true
+            signature_crossrefs: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+
+nav:
+  - Accueil: index.md
+  - Démarrage Rapide: getting-started.md
+  - API Reference:
+      - Services: api/services.md
+      - Modèles: api/models.md
+      - Routes: api/routes.md
+      - Schémas: api/schemas.md
+  - CI/CD:
+      - Présentation: cicd/overview.md
+      - Pipeline CI: cicd/pipeline.md
+      - Pre-commit: cicd/pre-commit.md
+      - Semantic Release: cicd/semantic-release.md
+  - Guides:
+      - Installation: guides/installation.md
+      - Tests: guides/tests.md
+      - Docker: guides/docker.md
+  - Changelog: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/RaoufAddeche
+  version:
+    provider: mike
