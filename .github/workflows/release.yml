@@ -31,17 +31,15 @@ jobs:
       - name: Install dependencies
         run: uv sync --group dev
 
-      - name: Python Semantic Release
-        id: release
-        uses: python-semantic-release/python-semantic-release@v9.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          git_committer_name: "github-actions[bot]"
-          git_committer_email: "github-actions[bot]@users.noreply.github.com"
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Publish release to GitHub
-        if: steps.release.outputs.released == 'true'
-        uses: python-semantic-release/upload-to-gh-release@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ steps.release.outputs.tag }}
+      - name: Run Semantic Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          uv run semantic-release version
+          uv run semantic-release changelog
+          uv run semantic-release publish
