@@ -1782,6 +1782,7 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
     { name = "psycopg2-binary" },
+    { name = "python-dotenv" },
     { name = "sqlmodel" },
 ]
 
@@ -1808,6 +1809,7 @@ docs = [
 requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.121.0" },
     { name = "psycopg2-binary", specifier = ">=2.9.11" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
     { name = "sqlmodel", specifier = ">=0.0.27" },
 ]
 

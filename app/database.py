@@ -8,6 +8,10 @@ from sqlmodel import create_engine, Session
 import os
 import sys
 from typing import Generator
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement depuis .env
+load_dotenv()
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/items_db"
